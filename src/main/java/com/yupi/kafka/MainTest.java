@@ -57,7 +57,7 @@ public class MainTest implements CommandLineRunner {
         System.out.println("Sending messages to topic: " + topic);
         System.out.println("Using Kafka broker: " + kafkaProperties.getBootstrapServers());
         
-        for (int i = 20; i < 25; i++) {
+        for (int i = 30; i < 35; i++) {
             ProducerRecord<String, String> record = new ProducerRecord<>(topic,
                     "key" + i,
                     "value" + new Date().getTime() + i);
