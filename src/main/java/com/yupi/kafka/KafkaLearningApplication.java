@@ -25,7 +25,7 @@ public class KafkaLearningApplication {
             // 这里可以做其他优雅退出处理，例如回收本地线程池、关闭定时调度器等操作
             try {
                 // 如果线程处于阻塞状态(sleep、wait、join等)，调用interrupt会跑出了该异常并清除中断状态
-                Thread.sleep(2000); // 等待一段时间，这里给时间dubbo的shutdownhook执行
+                Thread.sleep(2000); // 等待一段时间销毁Spring容器（包括各种资源），这里给时间dubbo的shutdownhook执行
                 log.info("Shutting down complete");
             } catch (InterruptedException e) {
                 log.error("Web context start fail", e);
