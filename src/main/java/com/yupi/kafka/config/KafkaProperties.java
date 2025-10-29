@@ -21,6 +21,7 @@ public class KafkaProperties {
     public static class Producer {
         private String keySerializer;
         private String valueSerializer;
+        private String partitioner;
         private String topic;
         private String acks;
         private Integer retries;

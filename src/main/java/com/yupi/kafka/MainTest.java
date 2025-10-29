@@ -39,6 +39,7 @@ public class MainTest implements CommandLineRunner {
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, kafkaProperties.getProducer().getKeySerializer());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, kafkaProperties.getProducer().getValueSerializer());
 //        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, MySerializer.class);
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, kafkaProperties.getProducer().getPartitioner());
         // Optional configurations from YAML
         if (kafkaProperties.getProducer().getAcks() != null) {
             properties.put(ProducerConfig.ACKS_CONFIG, kafkaProperties.getProducer().getAcks());
@@ -64,7 +65,7 @@ public class MainTest implements CommandLineRunner {
         System.out.println("Sending messages to topic: " + topic);
         System.out.println("Using Kafka broker: " + kafkaProperties.getBootstrapServers());
         
-        for (int i = 75; i < 80; i++) {
+        for (int i = 80; i < 85; i++) {
             Student student = new Student();
             student.setName("name-" + i);
             student.setAge(i);
