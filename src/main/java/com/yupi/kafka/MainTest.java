@@ -1,11 +1,13 @@
 package com.yupi.kafka;
 
+import com.yupi.kafka.callback.MyCallback;
 import com.yupi.kafka.config.KafkaProperties;
 import com.yupi.kafka.domain.Student;
 import lombok.SneakyThrows;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -65,7 +67,7 @@ public class MainTest implements CommandLineRunner {
         System.out.println("Sending messages to topic: " + topic);
         System.out.println("Using Kafka broker: " + kafkaProperties.getBootstrapServers());
         
-        for (int i = 80; i < 85; i++) {
+        for (int i = 100; i < 105; i++) {
             Student student = new Student();
             student.setName("name-" + i);
             student.setAge(i);
@@ -73,8 +75,8 @@ public class MainTest implements CommandLineRunner {
             ProducerRecord<String, Student> record = new ProducerRecord<>(topic,
                     "key-" + i,
                     student);
-            producer.send(record);
-            System.out.println("Sent message: key" + i + ", value" + new Date().getTime() + i);
+            producer.send(record, new MyCallback());
+//            System.out.println("Sent message: key" + i + ", value" + new Date().getTime() + i);
         }
         
         producer.close();
