@@ -1,4 +1,4 @@
-package com.yupi.kafka.interceptor;
+package com.yupi.kafka.interceptor.producer;
 
 import org.apache.kafka.clients.producer.ProducerInterceptor;
 import org.apache.kafka.clients.producer.ProducerRecord;
