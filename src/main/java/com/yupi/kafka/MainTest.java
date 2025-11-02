@@ -75,7 +75,7 @@ public class MainTest implements CommandLineRunner {
             consumerMessage(topic);
         }, "consumerThread").start();
         Thread.sleep(2000);
-        for (int i = 111; i < 115; i++) {
+        for (int i = 115; i < 120; i++) {
             Student student = new Student();
             student.setName("name-" + i);
             student.setAge(i);
@@ -101,14 +101,22 @@ public class MainTest implements CommandLineRunner {
         List<String> interceptors = new ArrayList<>();
         interceptors.add("com.yupi.kafka.interceptor.consumer.ConInterceptor");
         props.put(ConsumerConfig.INTERCEPTOR_CLASSES_CONFIG, interceptors);
+
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         KafkaConsumer<String, Student> consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Collections.singletonList(topic));
         while (true) {
-            ConsumerRecords<String, Student> poll = consumer.poll(100);
-            for (ConsumerRecord<String, Student> record : poll) {
-                // 数据筛查、幂等校验
-                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(),
-                        record.value());
+            try {
+                ConsumerRecords<String, Student> poll = consumer.poll(100);
+                for (ConsumerRecord<String, Student> record : poll) {
+                    // 数据筛查、幂等校验
+                    System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(),
+                            record.value());
+                }
+//            consumer.commitSync();
+                consumer.commitAsync();
+            } catch (Exception e) {
+                consumer.commitSync();
             }
         }
     }
