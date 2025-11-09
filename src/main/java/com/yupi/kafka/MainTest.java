@@ -97,6 +97,7 @@ public class MainTest implements CommandLineRunner {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "com.yupi.kafka.deserializer.MyDeserializer");
+//        props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, "range,round,sticky");
 
         List<String> interceptors = new ArrayList<>();
         interceptors.add("com.yupi.kafka.interceptor.consumer.ConInterceptor");
